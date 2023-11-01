@@ -6,6 +6,7 @@ function Search() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  //api to handle search
   const handleSearch = ( ) => {
     console.log(`fetching book ${ searchState}`);
 
