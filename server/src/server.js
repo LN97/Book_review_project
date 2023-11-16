@@ -3,8 +3,10 @@ const mongoose = require("mongoose");
 const app = express();
 const port = 5000;
 const mongoURI = 'mongodb+srv://ln97:uJw2Ds98qAddkSMG@test.1sxfvwd.mongodb.net/booksproject?retryWrites=true&w=majority'
-const controller_books = require('./services/service.books/api.js');
-
+const controller_collections = require('./services/service.books/api.collections.js');
+const controller_users = require('./services/service.users/api.js');
+const controller_books = require('./services/service.books/api.books.js');
+const controller_reviews = require('./services/service.books/api.reviews.js');
 
 // allowed you to use json from the client - used when we pass data in the body of a request.
 app.use(express.json());
@@ -22,7 +24,10 @@ app.use(express.urlencoded({ extended: false }));
     
 // });
 
+app.use('/api/collections' , controller_collections );
 app.use('/api/books' , controller_books );
+app.use('/api/reviews' , controller_reviews );
+app.use('/api/users' , controller_users );
 ``
 mongoose.connect(mongoURI);
 

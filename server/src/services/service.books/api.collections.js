@@ -1,6 +1,6 @@
 const express = require('express');
 const api_service_books = express.Router();
-const BooksCollectionModel = require('./models/model.user_collections');
+const BooksCollectionModel = require('./models/model.books_collections');
 
 // / api / books
 
