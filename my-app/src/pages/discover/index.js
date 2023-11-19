@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useEffect, useState } from 'react';
 import Book from './components/book';
 
 function Search() {
@@ -52,7 +52,7 @@ function Search() {
   )
 }
 
-function Reviews(){
+export default function DiscoverPage  () {
   let booksarray = [
   {
     title: "The Great Gatsby",
@@ -119,16 +119,3 @@ return (
 )
 
 }
-
-
-
-function App() {
-  return (
-    <div className="App">
-      <Reviews />
-
-    </div>
-  );
-}
-
-export default App;
