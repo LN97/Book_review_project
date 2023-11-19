@@ -16,6 +16,6 @@ const BooksSchema = new mongoose.Schema({
     reviews: [ ReviewsSchema ]
 });
 
-const BooksModel = mongoose.model("book" , UsersSchema );
+const BooksModel = mongoose.model("book" , BooksSchema );
 
 module.exports = BooksModel;

@@ -8,6 +8,10 @@ const controller_users = require('./services/service.users/api.js');
 const controller_books = require('./services/service.books/api.books.js');
 const controller_reviews = require('./services/service.books/api.reviews.js');
 
+
+require('dotenv').config();
+
+
 // allowed you to use json from the client - used when we pass data in the body of a request.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -24,12 +28,16 @@ app.use(express.urlencoded({ extended: false }));
     
 // });
 
+app.get('/', (req, res) => {
+  res.send(`Hello! The secret key is: ${process.env.SECRET_KEY }`);
+});
+
 app.use('/api/collections' , controller_collections );
 app.use('/api/books' , controller_books );
 app.use('/api/reviews' , controller_reviews );
 app.use('/api/users' , controller_users );
 ``
-mongoose.connect(mongoURI);
+mongoose.connect(process.env.mongoURI);
 
 // Check for successful connection
 const db = mongoose.connection;
@@ -42,5 +50,5 @@ db.once("open", () => {
 // connection to our server.
 
 app.listen( port , ( ) => {
-    console.log('port runing on 5000')
+    console.log(`running on port ${process.env.port }`)
 });

@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get all books
+// Get all books 
 router.get('/', async (req, res) => {
   try {
     const books = await BooksModel.find();
