@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Book from './components/book';
+import { Link } from 'react-router-dom';
 
 function Search() {
   const [ searchState , updateSearch ] = useState('');
@@ -15,9 +16,10 @@ function Search() {
     fetch(`https://openlibrary.org/search.json?q=${searchState}`)
       .then((response) => response.json())
       .then((data) => {
-        const trimmedResults = data.docs.slice(0, 5);
-        setSearchResults( data.docs );
-
+        const trimmedResults = data.docs.slice(0, 3);
+        const yieldResults = trimmedResults.map( ({ title , subject , publisher, author_name, first_publish_year }) => ( { title , subject , publisher, author_name, first_publish_year })) ;
+        setSearchResults( yieldResults );
+        console.log( trimmedResults , yieldResults )
         setLoading(false);
       })
       .catch((error) => {
