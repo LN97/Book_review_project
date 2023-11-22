@@ -1,5 +1,10 @@
 import { useSearchParams , useParams } from "react-router-dom";
 import { useState  } from 'react';
+
+import '../../index.css'
+
+
+
 export default function BookPage ( ) {
 
     let [searchParams, setSearchParams] = useSearchParams();
@@ -12,7 +17,7 @@ export default function BookPage ( ) {
     let { bookid } = useParams();
 
     return (
-        <div>
+        <div className="bg-red-500">
             Single book : { bookid }
         </div>
     )
