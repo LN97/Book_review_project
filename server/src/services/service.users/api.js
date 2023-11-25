@@ -2,8 +2,30 @@ const express = require('express');
 const UserModel = require('./models/model.user');
 const API = express.Router();
 
+// / api / users /
 
-// Create a new user
+API.post('/login' , async ( req, res ) => {
+  try {
+      const { username , password } = req.body;
+      console.log( username, password );
+      let user = await UserModel.findOne({ username , password });
+
+     if (user) {
+      // User found, send a response with a success status and user data
+      res.status(200).json({ didLog: true, res: user });
+    } else {
+      // User not found, send a response with a failure status
+      res.status(200).json({ didLog: false, res: 'Invalid credentials' });
+    }
+  }
+  catch ( err ) {
+      console.log( err )
+      res.status( 500 ).send('err' );
+  }
+})
+
+
+// // Create a new user
 API.route('/')
     .post( async (req, res) => {
     try {
@@ -37,6 +59,5 @@ API.route('/')
       res.status(500).json({ error: error.message });
     }
   });
-
 
 module.exports = API;

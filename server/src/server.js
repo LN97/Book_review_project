@@ -1,13 +1,17 @@
 const express = require('express');
 const mongoose = require("mongoose");
+const cors = require('cors');
+
 const app = express();
 const port = 5000;
-const mongoURI = 'mongodb+srv://ln97:uJw2Ds98qAddkSMG@test.1sxfvwd.mongodb.net/booksproject?retryWrites=true&w=majority'
+
 const controller_collections = require('./services/service.books/api.collections.js');
 const controller_users = require('./services/service.users/api.js');
 const controller_books = require('./services/service.books/api.books.js');
 const controller_reviews = require('./services/service.books/api.reviews.js');
 
+
+app.use( cors() );
 
 require('dotenv').config();
 
@@ -28,16 +32,20 @@ app.use(express.urlencoded({ extended: false }));
     
 // });
 
-app.get('/', (req, res) => {
-  res.send(`Hello! The secret key is: ${process.env.SECRET_KEY }`);
+app.post('/', (req, res) => {
+    let { username , password } = req.body;
+    console.log( username , password )
+    res.status( 200 ).send({
+      data: 'hey' , username
+    })
 });
 
 app.use('/api/collections' , controller_collections );
 app.use('/api/books' , controller_books );
 app.use('/api/reviews' , controller_reviews );
 app.use('/api/users' , controller_users );
-``
-mongoose.connect(process.env.mongoURI);
+
+mongoose.connect( process.env.mongoURI );
 
 // Check for successful connection
 const db = mongoose.connection;
