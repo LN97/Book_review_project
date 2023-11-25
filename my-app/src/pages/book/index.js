@@ -1,10 +1,6 @@
 import { useSearchParams , useParams } from "react-router-dom";
 import { useState  } from 'react';
 
-import '../../index.css'
-
-
-
 export default function BookPage ( ) {
 
     let [searchParams, setSearchParams] = useSearchParams();

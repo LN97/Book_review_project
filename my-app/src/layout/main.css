@@ -1,0 +1,11 @@
+/* Main.css */
+
+main#layout_main {
+    padding: 20px;
+    width: 100%; /* 80% of the parent container */
+    margin: 0 auto; /* Center the main content */
+    height: 100vh; /* 100% of the viewport height */
+  }
+  
+  /* Add additional styling as needed */
+  

@@ -1,14 +1,16 @@
-'./styles.css';
 
-import Header from './header';
-
+import Header from './header/header';
+import './main.css'
 
 export default function Layout ( { children } ) {
     return (
         <div>
             <Header />
-            { children }
-          
+            <main id="layout_main">
+                        
+                    { children }
+                
+            </main>
         </div>
         
     )

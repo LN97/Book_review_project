@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
 import { AppProvider } from './context';
 
-// === PAGE IMPORTS === //
+// === PAGE IMPORTS === //#
+
+
+import './styles.css'
 
 import DiscoverPage from './pages/discover/index';
 import LoginPage from './pages/login/index';
@@ -24,7 +26,7 @@ import {
     return (
       <BrowserRouter>
           <AppProvider>
-              <Layout> 
+              <Layout > 
                   <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={ <LoginPage /> } />

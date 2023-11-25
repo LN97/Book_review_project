@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../../context';
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+
+  const navigate = useNavigate();
+
   const { login } = useAppContext();
   const [formData, setFormData] = useState({
     username: '',
@@ -19,12 +23,13 @@ const LoginForm = () => {
   const handleLogin = () => {
     // Perform login logic here, e.g., calling a login API
     // For simplicity, we'll just call the login function from the context
-    login({ username: formData.username });
+    login({ username: formData.username , password: formData.password } , ( ) => {
+        navigate('/collections')
+    });
   };
 
   return (
     <div>
-      <h2>Login</h2>
       <form>
         <label>
           Username:
