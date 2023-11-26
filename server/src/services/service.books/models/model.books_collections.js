@@ -4,7 +4,6 @@ const { ObjectId } = mongoose.Types;
 const booksSchema = new mongoose.Schema({
     bookId: { type: ObjectId , required: true },
     hasRead: { type: Boolean , default: false },
-    
 });
 
 const booksCollectionsSchema = new mongoose.Schema({

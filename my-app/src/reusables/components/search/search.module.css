@@ -1,0 +1,75 @@
+.searchContainer {
+    margin-top: 20px;
+  }
+  
+  .searchInput {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .searchButton {
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .loadingMessage {
+    margin-top: 10px;
+    font-style: italic;
+    color: #777;
+  }
+  
+  .resultsList {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  
+  .resultItem {
+    margin-bottom: 5px;
+  }
+  
+  .resultLink {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .resultLink:hover {
+    text-decoration: underline;
+  }
+  
+  /* ... Other styles ... */
+
+.resultsList {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.resultItem {
+  margin-bottom: 5px;
+}
+
+.resultLink {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.resultLink:hover {
+  text-decoration: underline;
+}
+
+/* New style for the colored box */
+.colorBox {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 4px;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 4px;
+}
