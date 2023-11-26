@@ -1,0 +1,28 @@
+.book {
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+  }
+  
+  .title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .author {
+    color: #555;
+  }
+  
+  .publisher {
+    color: #777;
+  }
+  
+  .subject {
+    font-style: italic;
+  }
+  
+  .publishYear {
+    font-size: 0.9em;
+    color: #999;
+  }
+  

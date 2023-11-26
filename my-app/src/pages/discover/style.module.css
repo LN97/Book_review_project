@@ -1,0 +1,32 @@
+.discoverPage {
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 2em;
+  }
+  
+  .booksTitle {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .booksContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust the gap as needed */
+  }
+  
+  /* Style for each book */
+  .bookItem {
+    flex: 1 1 calc(25% - 20px); /* Adjust the width and gap as needed */
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .bookItem:hover {
+    background-color: #f2f2f2;
+  }
+  

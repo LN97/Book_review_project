@@ -1,0 +1,78 @@
+/* BookPage.module.css */
+
+.bookPageContainer { 
+    padding: 20px;
+  }
+  
+  .bookSection {
+    margin-bottom: 20px;
+  }
+  
+  .bookTitle {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .bookInfo {
+    margin-bottom: 20px;
+  }
+  
+  .reviewContainer {
+    margin-top: 20px;
+  }
+  
+  .reviewTitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .reviewItem {
+    margin-bottom: 15px;
+  }
+  
+  .reviewAuthor {
+    font-weight: bold;
+  }
+  
+  .reviewRating {
+    margin-top: 5px;
+  }
+  
+
+/* ... Existing styles ... */
+
+.addReviewContainer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .addReviewTitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .reviewInput {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .submitReviewButton {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submitReviewButton:hover {
+    background-color: #267bb5;
+  }
+  
