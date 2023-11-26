@@ -18,12 +18,11 @@ export default function Search() {
       .then((data) => {
         const trimmedResults = data.docs.slice(0, 3);
         console.log( trimmedResults )
-        const yieldResults = trimmedResults.map(({ title, publisher, author_name, first_publish_year, _version_ }) => ({
+        const yieldResults = trimmedResults.map(({ title, author_name, first_publish_year, _version_ }) => ({
           title,
-          publisher,
-          author_name,
-          first_publish_year,
-          bookId: _version_ 
+          author_name: author_name[0],
+          first_publish_year: first_publish_year.toString(),
+          bookId: _version_.toString()
         }));
         setSearchResults(yieldResults);
         setLoading(false);
@@ -55,7 +54,7 @@ export default function Search() {
       <ul className={Styles.resultsList}>
         {searchResults.map((book) => (
           <li key={book.title} className={Styles.resultItem}>
-            <Link to={`/book/${book.bookId}`} className={Styles.resultLink}>
+            <Link to={`/book/${book.bookId}`} className={Styles.resultLink} state={ book }>
               {book.title} by {book.author_name}{' '}
               <span className={Styles.colorBox}>published in {book.first_publish_year}</span>
             </Link>

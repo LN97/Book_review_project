@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const useFetch = (url) => {
+export default function useFetch ( type, endpoint , body = {} ) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -8,9 +9,16 @@ const useFetch = (url) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url);
-        const result = await response.json();
-        setData(result);
+        if ( type = 'POST' ) {
+            const response = await axios.post(`http://localhost:5000${ endpoint}` , body );
+            const result = await response.data;
+            setData(result);
+        } else {
+            const response = await axios.get(`http://localhost:5000${ endpoint}`);
+            const result = await response.data;
+            setData(result);
+        }
+      
       } catch (error) {
         setError(error);
       } finally {
@@ -19,7 +27,7 @@ const useFetch = (url) => {
     };
 
     fetchData();
-  }, [url]);
+  }, [endpoint]);
 
   return { data, loading, error };
 };

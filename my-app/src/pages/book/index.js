@@ -1,46 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import styles from './style.module.css';
+import axios from 'axios';
+import { useAppContext } from '../../context';
 
-export default function BookPage() {
-  const [book, setBook] = useState({});
+function ReviewBook ( { bookId })  {
+  const { user } = useAppContext();
   const [newReview, setNewReview] = useState({ comment: '', rating: 0 });
 
-  const dummyBook = {
-    bookId: '123456789',
-    author: 'John Doe',
-    title: 'Sample Book',
-    first_publish_year: '2020',
-    reviews: [
-      {
-        authorId: '987654321',
-        authorName: 'Loris',
-        comment: 'This is a great book!',
-        rating: 4,
-      },
-      {
-        authorId: '876543210',
-        authorName: 'James',
-        comment: 'I enjoyed reading this book.',
-        rating: 5,
-      },
-    ],
-  };
-
-  let { bookid } = useParams();
-
-  useEffect(() => {
-    // fetch book from API.
-
-         // set book in state.   
-         setBook(dummyBook);
-  }, []);
-
   const handleReviewSubmit = () => {
-    // Assuming you have a function to handle adding a new review
-    // You can replace this with your actual logic
-    console.log("Adding review:", newReview);
+    console.log("Adding review:", newReview , user );
+    // send review to book using user id.
+    axios.post(`http://localhost:5000/api/reviews/${ bookId }`,{
+       newReview, user: {  username: user.user.username , _id: user.user._id }
+    })
     // Reset the form after submitting the review
     setNewReview({
       comment: '',
@@ -49,12 +22,61 @@ export default function BookPage() {
   };
 
   return (
+    <div className={styles.addReviewContainer}>
+              <h3 className={styles.addReviewTitle}>Add a Review:</h3>
+              <div>
+                <label>
+                  Comment:
+                  <textarea
+                    value={newReview.comment}
+                    onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                    className={styles.reviewInput}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Rating:
+                  <input
+                    type="number" min={1} max={5}
+                    value={newReview.rating}
+                    onChange={(e) => setNewReview({ ...newReview, rating: e.target.value })}
+                    className={styles.reviewInput}
+                  />
+                </label>
+              </div>
+              <button onClick={handleReviewSubmit} className={styles.submitReviewButton}>
+                Submit Review
+              </button>
+    </div>
+  )
+}
+
+export default function BookPage() {
+  let { state } = useLocation();
+  const { user } = useAppContext();
+
+  const [book, setBook] = useState({});
+
+  useEffect(() => {
+    // fetch book from API.
+          console.log( state  )
+          axios.post(`http://localhost:5000/api/books/` , state )
+               .then( ( res ) => {
+                   setBook( res.data );
+               })
+               .catch( err => console.log( err ) );
+         // set book in state.   
+  }, []);
+
+
+  return (
     <div className={styles.bookPageContainer}>
       <div className={styles.bookSection}>
         <h2 className={styles.bookTitle}>{book.title}</h2>
         <div className={styles.bookInfo}>
           <p>
-            <strong>Author:</strong> {book.author}
+            <strong>Author:</strong> {book.author_name }
           </p>
           <p>
             <strong>Published Year:</strong> {book.first_publish_year}
@@ -86,34 +108,12 @@ export default function BookPage() {
           )}
         </div>
 
-        {/* New Review Section */}
-        <div className={styles.addReviewContainer}>
-          <h3 className={styles.addReviewTitle}>Add a Review:</h3>
-          <div>
-            <label>
-              Comment:
-              <textarea
-                value={newReview.comment}
-                onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                className={styles.reviewInput}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Rating:
-              <input
-                type="number" min={1} max={5}
-                value={newReview.rating}
-                onChange={(e) => setNewReview({ ...newReview, rating: e.target.value })}
-                className={styles.reviewInput}
-              />
-            </label>
-          </div>
-          <button onClick={handleReviewSubmit} className={styles.submitReviewButton}>
-            Submit Review
-          </button>
-        </div>
+        { user ? (
+          <ReviewBook />
+        ) : (
+          <p> You must be signed in to leave a comment </p>
+        )}    
+
       </div>
     </div>
   );

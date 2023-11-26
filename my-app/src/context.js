@@ -20,13 +20,12 @@ export const AppProvider = ({ children }) => {
               if ( response.data.didLog ) {
               
                  console.log( 'logged')   
-                 setUser( response.data.didLog );
+                 setUser({ user: response.data.res , isLogged: response.data.didLog });
                  returnBack();
               } else {
                 console.log('didnt log')
                 returnBack( response.data.didLog )
               }
-             
            })
            .catch(function (error) {
             // handle error
