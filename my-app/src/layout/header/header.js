@@ -32,7 +32,7 @@ const Header = () => {
       <div className="user-info">
         {user ? (
           <div>
-            <h3>{user.username}</h3>
+            <h3>{user.user.username}</h3>
             <div className="logout-button" onClick={() => logout()}>
               Logout
             </div>

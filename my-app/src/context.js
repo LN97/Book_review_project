@@ -9,7 +9,13 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }) => {
-  const [user, setUser] = useState( null );
+  const [user, setUser] = useState({
+    user: {
+      username: 'Loris',
+      password: '12345',
+      _id: "6556603da04323729ac8bde9"
+  },
+ didLog: true });
 
   const login = (userData , returnBack ) => {
       let { username , password } = userData;
@@ -19,7 +25,7 @@ export const AppProvider = ({ children }) => {
               console.log( response.data )
               if ( response.data.didLog ) {
               
-                 console.log( 'logged')   
+                 console.log( 'logged' , response.data .user )   
                  setUser({ user: response.data.res , isLogged: response.data.didLog });
                  returnBack();
               } else {
@@ -40,7 +46,8 @@ export const AppProvider = ({ children }) => {
   const states = {
     user,
     login,
-    logout
+    logout,
+    setUser
   };
 
   return (

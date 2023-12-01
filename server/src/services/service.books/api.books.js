@@ -17,13 +17,17 @@ router.get('/', async (req, res) => {
 });
 
 // find a specific book by ID or create new book.
-router.post('/', async (req, res) => {
-  const { title, bookId , first_publish_year, author_name } = req.body;
+// grab id from route
+
+router.post('/:bookId', async (req, res) => {
+  const { title, first_publish_year, author_name } = req.body;
+  const { bookId } = req.params;
+
   console.log( req.body );
   try {
     const book = await BooksModel.findOne({ bookId });
     if (!book) {
-      console.log( 'no book')
+      console.log( 'no book found')
       const newBook = new BooksModel({ bookId, author_name , title, first_publish_year , reviews: [] });
       const savedBook = await newBook.save();
       return res.status(201).send( savedBook );

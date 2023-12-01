@@ -7,36 +7,38 @@ const { ObjectId } = mongoose.Types;
 
 // api / reviews
 
+
 // Use findByIdAndUpdate to add the new review to the reviews array
-router.post('/:bookId' , ( req , res ) => {
-    let { bookId } = req.params;
-    console.log( req.body , bookId );
-    let { newReview , user: { username: reviewerName , _id : reviewerId } } = req.body;
-    newReview.rating = parseInt( newReview.rating );
-    const review = {
-        reviewerName , reviewerId , ...newReview
-    };
+router.post('/:bookId' ,async  ( req , res ) => {
 
-    console.log( review );
+    try {    
+        let { bookId } = req.params;
+        console.log( req.body , bookId );
+        let { newReview , user: { username: reviewerName , _id : reviewerId } } = req.body;
+        newReview.rating = parseInt( newReview.rating );
+        const review = {
+            reviewerName , reviewerId , ...newReview
+        };
 
-    // BooksModel.findByIdAndUpdate( bookId, { $push: { reviews: review } }, { new: true, useFindAndModify: false }, 
-    //   (err, updatedBook) => {
-    //       if (err) {
-    //           res.status(501).send('err with model save')
-    //       }
-
-    //       if (!updatedBook) {
-    //           res.setMaxListeners( 501).send('error finding book')
-    //           return;
-    //       }
-
-    //       console.log('New review added successfully:', updatedBook);
-    //       res.status( 201 ).send( updatedBook );
-    //    }
-    // ); 
-
-    res.status( 200 ).send( review )
+        console.log( 'review: ' , review );
+        
+        const book = await BooksModel.findOne({ bookId });
     
+        if (!book) {
+          return res.status(500).json({ error: 'Book not found' });
+        }
+    
+        // Add the new review to the reviews subdocument
+        book.reviews.push(  review );
+    
+        // Save the updated book document
+        await book.save();
+    
+        res.status(201).json(book);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
  
 });
 

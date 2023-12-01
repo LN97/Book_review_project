@@ -4,7 +4,7 @@ import styles from './style.module.css';
 import axios from 'axios';
 import { useAppContext } from '../../context';
 
-function ReviewBook ( { bookId })  {
+function ReviewBook ( { bookId , triggerRefresh } )  {
   const { user } = useAppContext();
   const [newReview, setNewReview] = useState({ comment: '', rating: 0 });
 
@@ -14,6 +14,12 @@ function ReviewBook ( { bookId })  {
     axios.post(`http://localhost:5000/api/reviews/${ bookId }`,{
        newReview, user: {  username: user.user.username , _id: user.user._id }
     })
+    .then(  res => {
+      console.log( res.data );
+      triggerRefresh();
+    })
+    .catch( err => console.log( err.response.data ));
+
     // Reset the form after submitting the review
     setNewReview({
       comment: '',
@@ -55,19 +61,25 @@ function ReviewBook ( { bookId })  {
 export default function BookPage() {
   let { state } = useLocation();
   const { user } = useAppContext();
-
   const [book, setBook] = useState({});
+  const [refreshCounter, setRefreshCounter] = useState(0);
+
+  const refreshReviews = () => {
+    // Increment the counter to trigger the useEffect
+    setRefreshCounter((prevCounter) => prevCounter + 1);
+  };
+
 
   useEffect(() => {
     // fetch book from API.
           console.log( state  )
-          axios.post(`http://localhost:5000/api/books/` , state )
+          axios.post(`http://localhost:5000/api/books/${state.bookId}` , state )
                .then( ( res ) => {
                    setBook( res.data );
                })
                .catch( err => console.log( err ) );
          // set book in state.   
-  }, []);
+  }, [ refreshCounter ] );
 
 
   return (
@@ -92,7 +104,7 @@ export default function BookPage() {
               {book.reviews.map((review, index) => (
                 <li key={index} className={styles.reviewItem}>
                   <p className={styles.reviewAuthor}>
-                    <strong>Author:</strong> {review.authorName }
+                    <strong>Author:</strong> {review.reviewerName }
                   </p>
                   <p>
                     <strong>Rating:</strong> {review.rating}
@@ -109,7 +121,7 @@ export default function BookPage() {
         </div>
 
         { user ? (
-          <ReviewBook />
+          <ReviewBook bookId={ state.bookId } triggerRefresh={ refreshReviews }/>
         ) : (
           <p> You must be signed in to leave a comment </p>
         )}    

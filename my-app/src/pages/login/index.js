@@ -1,72 +1,38 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../../context';
-import { useNavigate } from "react-router-dom";
+import LoginForm from './login';
+import SignUp from './register';
 
-const LoginForm = () => {
+export default function LoginPage() {
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
-  const navigate = useNavigate();
-
-  const { login } = useAppContext();
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const showLoginForm = () => {
+    setIsLoginForm(true);
   };
 
-  const handleLogin = () => {
-    // Perform login logic here, e.g., calling a login API
-    // For simplicity, we'll just call the login function from the context
-    login({ username: formData.username , password: formData.password } , ( ) => {
-        navigate('/collections')
-    });
+  const showSignUpForm = () => {
+    setIsLoginForm(false);
+  };
+
+  const containerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    height: '100vh',
+  };
+
+  const buttonContainerStyle = {
+    margin: '20px 0 20px 0', // Add margin between buttons
   };
 
   return (
-    <div>
-      <form>
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-      </form>
+    <div style={containerStyle}>
+      <h1>Login Page</h1>
+      <div style={buttonContainerStyle}>
+        <button onClick={showLoginForm}>Login</button>
+        <button onClick={showSignUpForm} style={{ marginLeft: '10px' }}>Sign Up</button>
+      </div>
+      {isLoginForm ? <LoginForm /> : <SignUp />}
     </div>
   );
-};
-
-
-export default function LoginPage () {
-
-
-    return (
-        <div>
-            <h1> login page </h1>
-            <LoginForm />
-        </div>
-    )
 }
