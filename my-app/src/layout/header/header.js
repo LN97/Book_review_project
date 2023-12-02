@@ -1,18 +1,25 @@
 // Header.js
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../context';
 import './styles.css'; // Import your CSS file for styling
 
 const Header = () => {
   const { user, logout } = useAppContext();
 
+  const navigate = useNavigate();
+
   const pageUrls = [
     { link: '/', name: 'home', protected: false, hideIfAuthed: true },
     { link: '/discover', name: 'discover', protected: false },
-    { link: 'collections', name: 'collections', protected: true },
+    { link: '/savedbooks', name: 'saved books', protected: true },
   ];
+
+  const logoutUser = ( ) => {
+     logout();
+     navigate('/login');
+  }
 
   return (
     <header>

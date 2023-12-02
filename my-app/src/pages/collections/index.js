@@ -2,78 +2,44 @@ import { useEffect, useState } from 'react';
 import Book from '../../reusables/components/book';
 
 import styles from './style.collection.module.css';
+import { useAppContext } from '../../context';
 
 
-const CollectionDetails = ({ collection = null }) => {
+export default function SavedBooks () {
 
-    useEffect( ( ) => {
-        // fetch books using the books array
-    }, [ collection ] );
-  
-    return (
-      <div>
-            { !collection ? 'collection not chosen' : (
-                 <h3>{collection.name} </h3> 
-            )}
-      </div>
-    );
-  };
-  
+  const [ books , setBooks ] = useState([]);
+  const { user } = useAppContext();
 
-export default function CollectionsPage() {
+  useEffect( ( ) => {
 
-  const [collections, setCollections] = useState([
-    {
-      userId: 'user123',
-      name: 'Sci-Fi Collection',
-      books: [
-        { bookId: 'book1', hasRead: true },
-        { bookId: 'book2', hasRead: false },
-        { bookId: 'book3', hasRead: true },
-      ],
-    },
-    {
-      userId: 'user456',
-      name: 'Mystery Collection',
-      books: [
-        { bookId: 'book4', hasRead: false },
-        { bookId: 'book5', hasRead: true },
-        { bookId: 'book6', hasRead: false },
-      ],
-    },
-    // Add more fake data as needed
-  ]);
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/books/savedby/${user.user._id }`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch books');
+        }
 
-  const [ collectionChosen , setCollection ] = useState(null);
+        const data = await response.json();
+        console.log( data );
+        setBooks(data);
+      } 
+      catch (error) {
+        console.error('Error during fetch:', error);
+      }
+    };
 
-  const handleCollectionClick = (collection) => {
-        setCollection( collection )
-  };
+    fetchBooks();
+
+  }, [ ] );
 
   return (
     <div className={styles.collectionsPage}>
 
-      <h2>Collections you've collected </h2>
+      <h2> Saved Books </h2>
 
-      <div>
-            <ul className={styles.collectionList}>
-                    {collections.map((collection, index) => (
-                    <li key={index}>
-                        <div
-                        className={styles.collectionItem}
-                        onClick={() => handleCollectionClick(collection)}
-                        >
-                        {collection.name}
-                        </div>
-                    </li>
-                    ))}
-            </ul>
-      </div>
-
-      <div>
-
-            <CollectionDetails collection={ collectionChosen } />
-      </div>
+      { books.map( ( book , index ) => 
+          <Book bookProp={ book } key={ index } />
+      )}
     </div>
   );
 }

@@ -7,35 +7,27 @@ export default function DiscoverPage  () {
     let booksarray = [
       {
         title: "The Great Gatsby",
-        author: "F. Scott Fitzgerald",
-        publishedYear: 1925,
-        genre: "Fiction",
+        author_name: "F. Scott Fitzgerald",
+        first_publish_year: 1925,
         id: '12345',
-        hasRead: true
       },
       {
         title: "To Kill a Mockingbird",
         author: "Harper Lee",
-        publishedYear: 1960,
-        genre: "Fiction",
-        id: '23456',
-        hasRead: false
+        first_publish_year: 1960,
+        id: '23456'
       },
       {
         title: "1984",
-        author: "George Orwell",
-        publishedYear: 1949,
-        genre: "Science Fiction",
+        author_name: "George Orwell",
+        first_publish_year: 1949,
         id: '45678',
-        hasRead: false
       },
       {
         title: "Pride and Prejudice",
-        author: "Jane Austen",
-        publishedYear: 1813,
-        genre: "Classic",
+        autho_namer: "Jane Austen",
+        first_publish_year: 1813,
         id: '6789',
-        hasRead: false
       }
     ];
     const [books, changeBooks] = useState([]); 

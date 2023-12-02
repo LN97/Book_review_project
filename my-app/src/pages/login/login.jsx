@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 import { useAppContext} from '../../context';
+import ErrorComponent from '../../reusables/components/errorMsg';
+
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -9,6 +11,8 @@ export default function LoginForm() {
       username: '',
       password: '',
     });
+
+    const [ error , setError ] = useState({ msg: '' , hasError: false });
   
     const handleInputChange = (e) => {
       const { name, value } = e.target;
@@ -21,14 +25,23 @@ export default function LoginForm() {
     const handleLogin = () => {
       // Perform login logic here, e.g., calling a login API
       // For simplicity, we'll just call the login function from the context
-      login({ username: formData.username, password: formData.password }, () => {
-        navigate('/collections');
+      login({ username: formData.username, password: formData.password }, ( { didLog , res } ) => {
+          if ( didLog ) {
+              navigate('/savedbooks')
+          } 
+          else {
+              console.log('error ' , res )
+              setError({ hasError: true , msg: res });
+          }
       });
     };
   
     return (
       <div style={styles.container}>
-        <form style={styles.form}>
+        <div style={styles.form}>
+
+          <ErrorComponent state={ error } />
+
           <label style={styles.label}>
             Username:
             <input
@@ -54,7 +67,7 @@ export default function LoginForm() {
           <button type="button" onClick={handleLogin} style={styles.button}>
             Login
           </button>
-        </form>
+        </div>
       </div>
     );
   }

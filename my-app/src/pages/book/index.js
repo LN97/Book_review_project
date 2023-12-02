@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import styles from './style.module.css';
 import axios from 'axios';
 import { useAppContext } from '../../context';
+import AddToLibraryButton from "./components/addToCollection";
+
 
 function ReviewBook ( { bookId , triggerRefresh } )  {
   const { user } = useAppContext();
@@ -58,7 +60,16 @@ function ReviewBook ( { bookId , triggerRefresh } )  {
   )
 }
 
+/*
+    we are rendering a book by pass a state from search. but, if we use a link  elsewhere to our book page 
+    even using the id of the book, 
+    we get an error because we're fetching the book id from state, not the url param.
+
+    if the book already exists in the db, then we should just use the url param to render the page data.
+*/
+
 export default function BookPage() {
+
   let { state } = useLocation();
   const { user } = useAppContext();
   const [book, setBook] = useState({});
@@ -84,6 +95,9 @@ export default function BookPage() {
 
   return (
     <div className={styles.bookPageContainer}>
+
+      <AddToLibraryButton bookId={ state.bookId } />
+
       <div className={styles.bookSection}>
         <h2 className={styles.bookTitle}>{book.title}</h2>
         <div className={styles.bookInfo}>

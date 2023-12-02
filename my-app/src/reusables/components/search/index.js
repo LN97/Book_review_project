@@ -16,7 +16,7 @@ export default function Search() {
     fetch(`https://openlibrary.org/search.json?q=${searchState}`)
       .then((response) => response.json())
       .then((data) => {
-        const trimmedResults = data.docs.slice(0, 3);
+        const trimmedResults = data.docs.slice(0, 6);
         console.log( trimmedResults )
         const yieldResults = trimmedResults.map(({ title, author_name, first_publish_year, _version_ }) => ({
           title,
