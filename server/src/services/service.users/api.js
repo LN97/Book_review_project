@@ -1,6 +1,8 @@
 const express = require('express');
 const UserModel = require('./models/model.user');
 const API = express.Router();
+const mongoose = require('mongoose');
+
 
 // / api / users /
 
@@ -20,7 +22,7 @@ API.post('/login' , async ( req, res ) => {
   }
   catch ( err ) {
       console.log( err )
-      res.status( 500 ).send('err' );
+      res.status( 500 ).send({ didLog: false, res: 'error in request' });
   }
 });
 API.post('/register', async (req, res) => {
@@ -39,7 +41,7 @@ API.post('/register', async (req, res) => {
     }
 
     // Create a new user
-    const newUser = new UserModel({ username, password });
+    const newUser = new UserModel({ username, password, booksCollection: [] });
 
     // Save the user to the database
     await newUser.save();
@@ -53,6 +55,31 @@ API.post('/register', async (req, res) => {
   }
 });
 
+// /1233456/savebook
+
+API.post('/:userId/savebook/:bookId', async (req, res) => {
+  try {
+    const { userId, bookId } = req.params;
+
+    console.log(userId, bookId);
+
+    // Use findByIdAndUpdate to add the bookId to the user's savedBooks array
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { $push: { booksCollection: bookId } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ message: 'Book added to savedBooks array', data: updatedUser });
+  } catch (error) {
+    console.error('Error during POST request:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // // Create a new user
 // API.route('/')

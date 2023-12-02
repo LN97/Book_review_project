@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const BooksModel = require('./models/model.books');
+const UserModel = require('../service.users/models/model.user');
 
 // ** === Books API === ** //
 // / api / books 
@@ -51,6 +52,33 @@ router.put('/:bookId', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// fetch all books using a list of ids.
+router.get('/savedby/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    console.log( userId );
+
+    // Find the user by _id to get the savedBooks array
+    const user = await UserModel.findById({ _id: userId });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    console.log( user );
+
+    // Retrieve items based on the user's savedBooks array
+    const items = await BooksModel.find({ bookId: { $in: user.booksCollection } });
+    console.log( items )
+    res.json( items );
+
+  } catch (error) {
+    console.error('Error during POST request:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 
 module.exports = router;

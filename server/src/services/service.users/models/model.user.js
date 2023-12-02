@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Types;
 const UsersSchema = new mongoose.Schema({
     username: { type: String , required: true },
     password: { type: String , required: true },
-    booksCollections: [ ObjectId ]
+    booksCollection: [ String ]
 });
 
 const UserModel = mongoose.model("user" , UsersSchema );
