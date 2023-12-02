@@ -40,7 +40,7 @@ const Header = () => {
         {user ? (
           <div>
             <h3>{user.user.username}</h3>
-            <div className="logout-button" onClick={() => logout()}>
+            <div className="logout-button" onClick={() => logoutUser()}>
               Logout
             </div>
           </div>
