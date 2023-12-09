@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require("mongoose");
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const port = 5000;
@@ -20,6 +21,10 @@ require('dotenv').config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Serve static files (including your bundled JavaScript)
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 // middleware
 // app.use( ( req , res , next ) => {
 //     console.log('i get ran as you fetch to my server')
@@ -31,6 +36,12 @@ app.use(express.urlencoded({ extended: false }));
 //     }
     
 // });
+
+// Handle your React route
+app.get('/', (req, res) => {
+  // Assuming your React app is bundled in 'public/js/app.js'
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.post('/', (req, res) => {
     let { username , password } = req.body;

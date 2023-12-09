@@ -4,7 +4,7 @@ export default function WelcomePage () {
         <div>
             home page
         <h1 className="text-red">
-                 Hello world!
+                  hitting port: {process.env.REACT_APP_ENDPOINT}
             </h1>
         </div>
     )

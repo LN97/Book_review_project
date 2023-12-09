@@ -16,8 +16,11 @@ export default function LoginForm() {
   
     const handleInputChange = (e) => {
       const { name, value } = e.target;
+
       setFormData((prevData) => ({
+
         ...prevData,
+        // bracket notation.
         [name]: value,
       }));
     };

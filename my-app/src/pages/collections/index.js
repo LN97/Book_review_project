@@ -30,7 +30,7 @@ export default function SavedBooks () {
 
     fetchBooks();
 
-  }, [ ] );
+  }, [  ] );
 
   return (
     <div className={styles.collectionsPage}>
